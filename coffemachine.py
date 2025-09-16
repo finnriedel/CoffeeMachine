@@ -17,14 +17,21 @@ while auswahl != "off":
         case "1" : ##Latte Machiato
             price = 5.00
             print("Der Latte Machiato kostet: ",price,"€")
-            print("Ihr Getränk wird zubereitet.")
 
         case "2" : ##Espresso
             price = 3.00
             print("Der Espresso kostet: ",price,"€")
-            print("Ihr Getränk wird zubereitet.")
 
         case "3" : ##Cappuccino
             price = 4.50
             print("Der Cappuccino kostet: ",price,"€")
-            print("Ihr Getränk wird zubereitet.")
+
+        case "off":
+            print("Die Maschine wird ausgeschaltet...")
+            break
+        
+        case _:
+            print("Fehlerhafte Eingabe.")
+            break
+
+    print("Ihr Getränk wird zubereitet.")
