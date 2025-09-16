@@ -27,11 +27,11 @@ while auswahl != "off" and kaffebohnen != 0:
             price = 4.50
             print("Der Cappuccino kostet: ",price,"€")
 
-        case "off":
+        case "off": ##[Ausschalten]
             print("Die Maschine wird ausgeschaltet...")
             break
         
-        case "report":
+        case "report": ##[Report]
             print("Report")
 
         case "replenish":
