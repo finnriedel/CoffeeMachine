@@ -17,7 +17,7 @@ while auswahl != 4:
         case 1 : ##Latte Machiato
             price = 5.00
             print("Der Latte Machiato kostet: ",price,"€")
-                        
+
         case 2 : ##Espresso
             price = 3.00
             print("Der Espresso kostet: ",price,"€")
@@ -26,3 +26,4 @@ while auswahl != 4:
             price = 4.50
             print("Der Cappuccino kostet: ",price,"€")
 
+    print("Ihr Getränk wird zubereitet.")
