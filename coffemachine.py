@@ -16,15 +16,15 @@ while auswahl != "off" and kaffebohnen != 0:
 
     match auswahl:
         case "1" : ##Latte Machiato
-            price = 5.00
+            price = 5
             print("Der Latte Machiato kostet: ",price,"€")
 
         case "2" : ##Espresso
-            price = 3.00
+            price = 3.0
             print("Der Espresso kostet: ",price,"€")
 
         case "3" : ##Cappuccino
-            price = 4.50
+            price = 4.5
             print("Der Cappuccino kostet: ",price,"€")
 
         case "off": ##[Ausschalten]
@@ -42,4 +42,22 @@ while auswahl != "off" and kaffebohnen != 0:
             break
 
     kaffebohnen = kaffebohnen-1
+    
+
+    paid = False
+
+    def muenzeinwurf(n):
+        if n < price:
+            print("Es fehlen noch", price-n)
+            price = price-n
+        elif muenzen > price:
+            print("Das war zu viel! Du erhälst",n-price,"Rückgeld")
+            paid = True
+        else:
+            paid = True
+    
+    while paid == False:
+        muenzen = input("Bitte Bezahlen Sie.")
+        muenzeinwurf(muenzen)
+
     print("Ihr Getränk wird zubereitet.")
