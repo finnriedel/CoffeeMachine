@@ -2,11 +2,17 @@ spalte = 8
 zeile = 8
 schachbrett = [[0 for x in range(spalte)] for y in range(zeile)]
 
+
+
+#KI GENERIERT, UM DAS SCHACHBRETT AUSZUGEBEN:
 def drucke_brett():
-    for r in schachbrett:
-        for feld in r:
-            print('D ' if feld == 1 else '. ', end='')
-        print()
+    print("  A B C D E F G H")
+    
+    for i, zeile in enumerate(schachbrett):
+        zeilennummer = 8 - i
+        zeilen_string = "".join(['D ' if feld == 1 else '. ' for feld in zeile])
+        print(f"{zeilennummer} {zeilen_string}")
+    print("  A B C D E F G H")
 
 def pruefe(zeile, spalte):
 
