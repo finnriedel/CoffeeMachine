@@ -2,44 +2,49 @@ spalte = 8
 zeile = 8
 schachbrett = [[0 for x in range(spalte)] for y in range(zeile)]
 
-#schachbrett[0][0] = 1
+def drucke_brett():
+    for r in schachbrett:
+        for feld in r:
+            print('D ' if feld == 1 else '. ', end='')
+        print()
 
 def pruefe(zeile, spalte):
+
     x = zeile 
     y = spalte
 
     #Vertikale Prüfung
-    while(zeile >=0):  
-       if(schachbrett[zeile-1][spalte]==1):    
+    while(zeile > 0):  
+       if(schachbrett[zeile-1][spalte] == 1):    
            return False   
        else:
-           zeile-=1
+           zeile -= 1
     zeile = x
+
     #Horizontale Prüfung    
-    while(spalte >=0):  
-       if(schachbrett[zeile][spalte-1]==1):    
+    while(spalte > 0):  
+       if(schachbrett[zeile][spalte-1] == 1):    
            return False   
        else:
-           spalte-=1
+           spalte -= 1
     spalte = y    
+
     #Diagonale Prüfung (Links)
-    while(spalte >=0 and zeile >=0):
-        if(schachbrett[zeile-1][spalte-1]==1):
+    while(spalte > 0 and zeile > 0):
+        if(schachbrett[zeile - 1][spalte - 1] == 1):
             return False
-        else:
-            zeile-=1
-            spalte-=1
+        zeile -= 1
+        spalte -= 1
     zeile = x
     spalte = y
+
     #Diagonale Prüfung (Rechts)
-    while(spalte <=8 and zeile >=0):
-        if(schachbrett[zeile-1][spalte+1]==1):
+    while(spalte < 7 and zeile > 0):
+        if(schachbrett[zeile - 1][spalte + 1] == 1):
             return False
-        else:
-            zeile-=1
-            spalte+=1
-    zeile = x
-    spalte = y
+        zeile -= 1
+        spalte += 1
+
     return True
 
 def setze(zeile, spalte):
@@ -54,12 +59,20 @@ def setze(zeile, spalte):
 def loesen(zeile):
     if zeile >= 8:
         return True
-    for spalte in range(8):
-      if(pruefe(zeile, spalte) == True):
-        schachbrett[zeile] [spalte] = 1
-        if loesen(zeile +1):
-            return True
-        schachbrett[zeile][spalte] = 0
-    return False
-print(loesen(0))  
     
+    for spalte in range(8):
+      if pruefe(zeile, spalte):
+        schachbrett[zeile][spalte] = 1
+
+        if loesen(zeile + 1):
+            return True
+        
+        schachbrett[zeile][spalte] = 0
+
+    return False
+
+if loesen(0):
+    print("LÖSUNG GEFUNDEN")
+    drucke_brett()
+else:
+    print("Keine Lösung gefunden")
