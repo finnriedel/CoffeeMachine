@@ -1,3 +1,14 @@
-menue = {"Latte Machiato":5, "Espresso":3.0, "Cappuccino":4.5, "off":0, "report":0, "replenish":0}
+menue = {
+    "Latte Machiato":{
+        "Price":5
+    }, 
+    "Espresso":{
+        "Price":3
+         }, 
+    "Cappuccino":{
+        "Price":4.5
+         }}
+
+
 for i in menue:
     print(i)
