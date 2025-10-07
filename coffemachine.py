@@ -1,14 +1,21 @@
 menue = {
-    "Latte Machiato":{ 
-        "Preis":5.0,
-    },
+    "Latte Machiato":{
+        "price":5,
+        "water":"100ml",
+        "Coffee":"25g"
+    }, 
     "Espresso":{
-        "Preis":3.0,
-    },
+        "price":3,
+        "water":"50ml",
+        "coffe":"25g",
+        "milk":"100ml Oatmilk"
+         }, 
     "Cappuccino":{
-        "Preis":4.5,
-    }
-}
+        "price":4.5,
+        "water":"250ml",
+        "coffee":"25g",
+        "milk":"250ml Oatmilk"
+         }}
 
 for i in menue:
     print(i)
