@@ -59,6 +59,8 @@ while True:
         muenzeinwurf = float(input("Münzen einwerfen: "))
 
         match muenzeinwurf:
+            case 0:
+                break
             case 0.1:
                 preis=preis-0.1
             case 0.2:
