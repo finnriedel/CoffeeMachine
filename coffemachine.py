@@ -37,7 +37,7 @@ while True:
 
     if auswahl in menue:
 
-        if water_tank-menue[auswahl]['water'] >= 0 and coffee_grinder-menue[auswahl]['coffee'] >= 0 and milk_tank-coffee_grinder-menue[auswahl]['milk']:
+        if water_tank-menue[auswahl]['water'] >= 0 and coffee_grinder-menue[auswahl]['coffee'] >= 0 and milk_tank-menue[auswahl]['milk']:
             print("Die Kaffemaschine hat genügend ressourcen.")
         else:
             print("Die Kaffemaschine muss erst aufgefüllt werden")
@@ -83,7 +83,7 @@ while True:
     if(preis < 0):
         print("Sie bekommen", abs(preis), "€ Rückgeld")
         cash_drawer = cash_drawer - abs(preis)
-        
+
         while(preis != 0):
             if(preis <= -2):
                 preis=preis+2
