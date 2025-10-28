@@ -82,6 +82,8 @@ while True:
 
     if(preis < 0):
         print("Sie bekommen", abs(preis), "€ Rückgeld")
+        cash_drawer = cash_drawer - abs(preis)
+        
         while(preis != 0):
             if(preis <= -2):
                 preis=preis+2
@@ -100,4 +102,3 @@ while True:
                 print("0,10€")
 
     print("Kaffe wird ausgegeben")
-    
