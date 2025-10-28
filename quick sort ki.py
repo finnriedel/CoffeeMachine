@@ -1,7 +1,7 @@
-import numpy as np
+import random
 
-# Zufälliges Array erzeugen
-random_array = np.random.randint(0, 100, size=10)
+random_array = [random.randint(1, 100) for _ in range(10)]
+
 print("Original:", random_array)
 
 # In-place Quicksort mit Hilfsfunktion
