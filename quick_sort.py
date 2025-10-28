@@ -1,37 +1,32 @@
-import numpy as np
+import random
 
-random_array = np.random.randint(0, 100, size=10)
+random_array = [random.randint(1, 100) for _ in range(10)]
 
-print(random_array)
+print("\nHier ist das random Array:",random_array,"\n")
 
 def quick_sort(arr):
-    pivot = arr[0]
-    i = 0
-    j = len(arr) - 1
-    while i >= j:
-        while arr[i] >= pivot:
-            i+1
-        while arr[j] <= pivot:
-            j-1
-        tmp = i
-        arr[i] = arr [j]
-        arr[j] = tmp
-    
-    tmp = arr[i]
-    arr[i] = pivot
-    arr[0] = tmp
 
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[0]
     kleiner = []
     groesser = []
 
-    for y in range(i-1):
-        kleiner.append(arr[y])
-        
-    for x in range(j, len(arr-1)):
-        groesser.append(arr[x])
+    print("\n","-"*20)
+    print("\nDas Pivot-Element ist:",pivot,"und das Array ist:",arr,"\n")
+
+    for element in arr[1:]:
+        if element < pivot:
+            print(element, "Wird dem kleineren Array hinzugefügt")
+            kleiner.append(element)
+        else:
+            print(element, "Wird dem größeren Array hinzugefügt")
+            groesser.append(element)
     
-    return quick_sort(kleiner)+pivot+quick_sort(groesser)
+    
+    print("\nHier ist das gesamte kleinere Array:",kleiner)
+    print("Hier ist das gesamte größere Array:",groesser)
+    return quick_sort(kleiner)+[pivot]+quick_sort(groesser)
 
-
-quick_sort(random_array)
-print("Ergebnis:", random_array)
+print("\nHier ist das sortierte Array:", quick_sort(random_array),"\n")
