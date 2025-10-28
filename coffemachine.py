@@ -1,21 +1,33 @@
+#Price in Euro
+#Water in ml
+#Milk in ml
+#Coffee in g
+
+water_tank = 2000
+coffee_grinder = 50
+milk_tank = 1000
+cash_drawer = 0
+
 while True:
+
     menue = {
         "Latte Machiato":{
             "price":5,
-            "water":"100ml",
-            "Coffee":"25g"
+            "water":100,
+            "coffee":25,
+            "milk":250
         }, 
         "Espresso":{
             "price":3,
-            "water":"50ml",
-            "coffe":"25g",
-            "milk":"100ml Oatmilk"
+            "water":50,
+            "coffee":20,
+            "milk":0
             }, 
         "Cappuccino":{
             "price":4.5,
-            "water":"250ml",
-            "coffee":"25g",
-            "milk":"250ml Oatmilk"
+            "water":250,
+            "coffee":25,
+            "milk":100
             }}
 
     for i in menue:
@@ -24,6 +36,14 @@ while True:
     auswahl = input("Kaffee auswählen: ")
 
     if auswahl in menue:
+
+        if water_tank-menue[auswahl]['water'] >= 0 and coffee_grinder-menue[auswahl]['coffee'] >= 0 and milk_tank-coffee_grinder-menue[auswahl]['milk']:
+            print("Die Kaffemaschine hat genügend ressourcen.")
+        else:
+            print("Die Kaffemaschine muss erst aufgefüllt werden")
+            continue
+        
+
         preis = menue[auswahl]['price']
         print("Der ausgewählte Kaffe kostet:", preis, "€")
         
@@ -54,6 +74,12 @@ while True:
         if(preis > 0):        
             print("Es fehlen noch:", preis,"€")
 
+    #GELD WURDE EINGEWORFEN, RESSOURCEN WERDEN ABGEZOGEN
+    water_tank = water_tank-menue[auswahl]['water']
+    coffee_grinder = coffee_grinder-menue[auswahl]['coffee']
+    milk_tank = milk_tank-coffee_grinder-menue[auswahl]['milk']
+    cash_drawer = cash_drawer+menue[auswahl]['price']
+
     if(preis < 0):
         print("Sie bekommen", abs(preis), "€ Rückgeld")
         while(preis != 0):
@@ -74,3 +100,4 @@ while True:
                 print("0,10€")
 
     print("Kaffe wird ausgegeben")
+    
