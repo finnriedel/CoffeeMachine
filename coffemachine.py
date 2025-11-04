@@ -59,6 +59,8 @@ while True:
         muenzeinwurf = float(input("Münzen einwerfen: "))
 
         match muenzeinwurf:
+            case 0:
+                break
             case 0.1:
                 preis=preis-0.1
             case 0.2:
@@ -83,7 +85,7 @@ while True:
     if(preis < 0):
         print("Sie bekommen", abs(preis), "€ Rückgeld")
         cash_drawer = cash_drawer - abs(preis)
-        
+
         while(preis != 0):
             if(preis <= -2):
                 preis=preis+2
