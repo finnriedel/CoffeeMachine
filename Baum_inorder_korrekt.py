@@ -18,7 +18,7 @@ def einfuegen(node, data):
     return node
 
 def erstelleBaum(arr):
-    wurzel = Node(arr[0])
+    wurzel = Node(arr[0]) #Erstelle ein Objekt namens "wurzel" der Klasse Node()
 
     for i in range(1, len(arr)):
         einfuegen(wurzel, arr[i])
