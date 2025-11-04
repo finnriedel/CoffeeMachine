@@ -29,9 +29,9 @@ def fuelleBaum(arr):
         if i < n:
             rechts = arr[i]
             if rechts != 0:
-                rechts = Node(rechts)
-                parent.right = rechts
-                queue.append(rechts)
+                right_node = Node(rechts)
+                parent.right = right_node
+                queue.append(right_node)
             i += 1
             
     return wurzel
@@ -45,4 +45,14 @@ def ausgabeInorder(node):
         print(node.data, end=" ")
         ausgabeInorder(node.right)
  
+def ausgabePreorder(node):
+    if node:
+        print(node.data, end=" ")
+        ausgabePreorder(node.left)
+        ausgabePreorder(node.right)
+
+
+print("Inorder:")
 ausgabeInorder(baum)
+print("\nPreorder")
+ausgabePreorder(baum)
