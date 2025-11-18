@@ -6,7 +6,7 @@ import datetime
 #Coffee in g
 
 water_tank = 2000
-coffee_grinder = 50
+coffee_grinder = 500
 milk_tank = 1000
 
 cash_drawer = {
