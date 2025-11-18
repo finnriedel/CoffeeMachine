@@ -27,13 +27,13 @@ def erstelleBaum(arr):
 
 
 def ausgabeInorder(node):
-    if node:
+    if node is not None:
         ausgabeInorder(node.left)
         print(node.data, end=" ")
         ausgabeInorder(node.right)
 
 def ausgabePreorder(node):
-    if node:
+    if node is not None:
         print(node.data, end=" ")
         ausgabePreorder(node.left)
         ausgabePreorder(node.right)
