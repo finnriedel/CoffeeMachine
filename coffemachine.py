@@ -1,3 +1,5 @@
+import os
+import datetime
 #Price in Euro
 #Water in ml
 #Milk in ml
@@ -37,8 +39,65 @@ def cash_drawer_summieren():
     return summe
 
 def cash_drawer_balance():
+
+
     for element in cash_drawer:
         print(cash_drawer[element], ":", cash_drawer[element]['muenzen'])
+
+def cash_drawer_balance_string():
+    lines = [
+        f"{element}: {details['muenzen']} Münzen"
+        for element, details in cash_drawer.items()
+    ]
+    return "\n".join(lines)
+
+def resources_report():
+    dateiname = "report.txt"
+
+    try:
+        dat_Obj = open(dateiname, "w")
+        dat_Obj.write(f"Wasserstand: {water_tank} ml\n")
+        dat_Obj.write(f"Kaffebohnen: {coffee_grinder} g\n")
+        dat_Obj.write(f"Milchstand: {milk_tank} ml\n")
+        dat_Obj.write(f"--- Kassenbestand ---")
+        dat_Obj.write(cash_drawer_balance_string() + "\n")
+
+
+    except (IOError) as e:
+        print("Fehler")
+        os._exit(1)
+
+
+    print("Wasserstand:",water_tank,"ml")
+    print("Kaffebohnen:",coffee_grinder,"g")
+    print("Milchstand:",milk_tank,"ml")
+    print("In Report-Datei geschrieben...")
+    dat_Obj.close()
+
+def replenish():
+    aktuelle_zeit = datetime.datetime.now()
+    datumsstempel = aktuelle_zeit.strftime("%Y-%m-%d %H:%M:%S")
+
+    global water_tank
+    global coffee_grinder
+    global milk_tank
+
+    water_tank = 2000
+    coffee_grinder = 500
+    milk_tank = 1000
+
+    dateiname = "log.txt"
+
+    try:
+        dat_Obj = open(dateiname, "a")
+        dat_Obj.write(f"{datumsstempel}: Ressourcen wurden vollständig gefüllt.\n")
+
+    except (IOError) as e:
+        print("Fehler")
+        os._exit(1)
+
+    print("In Log-Datei geschrieben...")
+    dat_Obj.close()
 
 while True:
 
@@ -85,6 +144,12 @@ while True:
     elif auswahl == "balance":
         cash_drawer_balance()
         continue
+    elif auswahl == "replenish":
+        replenish()
+        continue
+    elif auswahl == "report":
+        resources_report()
+        continue
     else:
         print("Ungültige Auswahl")
         continue
@@ -98,19 +163,19 @@ while True:
                 break
             case 0.1:
                 preis=preis-0.1
-                cash_drawer["0,10€"]['muenzen']+1
+                cash_drawer["0,10€"]['muenzen']=cash_drawer["0,10€"]['muenzen']+1
             case 0.2:
                 preis=preis-0.2
-                cash_drawer["0,20€"]['muenzen']+1
+                cash_drawer["0,20€"]['muenzen']=cash_drawer["0,20€"]['muenzen']+1
             case 0.5:
                 preis=preis-0.5
-                cash_drawer["0,50€"]['muenzen']+1
+                cash_drawer["0,50€"]['muenzen']=cash_drawer["0,50€"]['muenzen']+1
             case 1:
                 preis=preis-1
-                cash_drawer["1,00€"]['muenzen']+1
+                cash_drawer["1,00€"]['muenzen']=cash_drawer["1,00€"]['muenzen']+1
             case 2:
                 preis=preis-2
-                cash_drawer["2,00€"]['muenzen']+1
+                cash_drawer["2,00€"]['muenzen']=cash_drawer["2,00€"]['muenzen']+1
             case _:
                 print("Bitte werfen Sie nur gültige Geldstücke ein")
         if(preis > 0):        
@@ -128,27 +193,30 @@ while True:
             if(preis <= -2):
                 if cash_drawer["2,00€"]['muenzen'] > 0:
                     preis=preis+2
-                    cash_drawer["2,00€"]['muenzen']-1
+                    cash_drawer["2,00€"]['muenzen']=cash_drawer["2,00€"]['muenzen']-1
                     print("2,00€")
             elif(preis <= -1):
                 if cash_drawer["1,00€"]['muenzen'] > 0:
                     preis=preis+1
-                    cash_drawer["1,00€"]['muenzen']-1
+                    cash_drawer["1,00€"]['muenzen']=cash_drawer["1,00€"]['muenzen']-1
                     print("1,00€")
             elif(preis <= -0.5):
                 if cash_drawer["0,50€"]['muenzen'] > 0:
                     preis=preis+0.5
-                    cash_drawer["0,50€"]['muenzen']-1
+                    cash_drawer["0,50€"]['muenzen']=cash_drawer["0,50€"]['muenzen']-1
                     print("0,50€")
             elif(preis <= -0.2):
                 if cash_drawer["0,20€"]['muenzen'] > 0:
-                    cash_drawer["0,20€"]['muenzen']-1
+                    cash_drawer["0,20€"]['muenzen']=cash_drawer["0,20€"]['muenzen']-1
                     preis=preis+0.2
                     print("0,20€")
             elif(preis <= -0.1):
                 if cash_drawer["0,10€"]['muenzen'] > 0:
                     preis=preis+0.1
-                    cash_drawer["0,10€"]['muenzen']-1
+                    cash_drawer["0,10€"]['muenzen']=cash_drawer["0,10€"]['muenzen']-1
                     print("0,10€")
 
     print("Kaffe wird ausgegeben")
+
+
+# Wenn kein Rückgeld mehr da ist, dann hängt sich die Kaffemaschine auf
