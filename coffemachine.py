@@ -184,34 +184,34 @@ while True:
     #GELD WURDE EINGEWORFEN, RESSOURCEN WERDEN ABGEZOGEN
     water_tank = water_tank-menue[auswahl]['water']
     coffee_grinder = coffee_grinder-menue[auswahl]['coffee']
-    milk_tank = milk_tank-coffee_grinder-menue[auswahl]['milk']
+    milk_tank = milk_tank-menue[auswahl]['milk']
 
     if(preis < 0 and cash_drawer_summieren() >= abs(preis)):
         print("Sie bekommen", abs(preis), "€ Rückgeld")
 
         while(preis != 0):
-            if(preis <= -2):
-                if cash_drawer["2,00€"]['muenzen'] > 0:
+            if(preis <= -2) and cash_drawer["2,00€"]['muenzen'] > 0:
+                #if cash_drawer["2,00€"]['muenzen'] > 0:
                     preis=preis+2
                     cash_drawer["2,00€"]['muenzen']=cash_drawer["2,00€"]['muenzen']-1
                     print("2,00€")
-            elif(preis <= -1):
-                if cash_drawer["1,00€"]['muenzen'] > 0:
+            elif(preis <= -1) and cash_drawer["1,00€"]['muenzen'] > 0:
+                #if cash_drawer["1,00€"]['muenzen'] > 0:
                     preis=preis+1
                     cash_drawer["1,00€"]['muenzen']=cash_drawer["1,00€"]['muenzen']-1
                     print("1,00€")
-            elif(preis <= -0.5):
-                if cash_drawer["0,50€"]['muenzen'] > 0:
+            elif(preis <= -0.5) and cash_drawer["0,50€"]['muenzen'] > 0:
+                #if cash_drawer["0,50€"]['muenzen'] > 0:
                     preis=preis+0.5
                     cash_drawer["0,50€"]['muenzen']=cash_drawer["0,50€"]['muenzen']-1
                     print("0,50€")
-            elif(preis <= -0.2):
-                if cash_drawer["0,20€"]['muenzen'] > 0:
+            elif(preis <= -0.2) and cash_drawer["0,20€"]['muenzen'] > 0:
+                #if cash_drawer["0,20€"]['muenzen'] > 0:
                     cash_drawer["0,20€"]['muenzen']=cash_drawer["0,20€"]['muenzen']-1
                     preis=preis+0.2
                     print("0,20€")
-            elif(preis <= -0.1):
-                if cash_drawer["0,10€"]['muenzen'] > 0:
+            elif(preis <= -0.1) and cash_drawer["0,10€"]['muenzen'] > 0:
+                #if cash_drawer["0,10€"]['muenzen'] > 0:
                     preis=preis+0.1
                     cash_drawer["0,10€"]['muenzen']=cash_drawer["0,10€"]['muenzen']-1
                     print("0,10€")
