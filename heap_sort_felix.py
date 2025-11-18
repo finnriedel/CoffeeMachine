@@ -26,18 +26,15 @@ def kindtauschen(n):
 
 def heapsort():
     global arr, sort_arr
-    # Heap aufbauen (1. Heap)
-    for i in range(len(arr) // 2, -1, -1):
-        kindtauschen(i)
-
+    
     # Sortieren (Weitere Heaps)
     while arr:
+        for i in range(len(arr) // 2, -1, -1):
+            kindtauschen(i)
         arr[0], arr[-1] = arr[-1], arr[0]
         print("Zwischenschritt:", "Array: ", arr)
         sort_arr.append(arr.pop())  # Größtes Element ans Ende
         print("Zwischenschritt:", "Sortiertes Array: ", sort_arr)
-        for i in range(len(arr) // 2, -1, -1):
-            kindtauschen(i)
 
 heapsort()
 print("Sortiertes finales Array: ", sort_arr)
