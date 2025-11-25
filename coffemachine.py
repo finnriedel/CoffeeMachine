@@ -1,14 +1,10 @@
 import os
 import datetime
 import csv
-#Price in Euro
-#Water in ml
-#Milk in ml
-#Coffee in g
 
-water_tank = 2000
-coffee_grinder = 500
-milk_tank = 1000
+water_tank = 2000 ##ml
+coffee_grinder = 500 ##g
+milk_tank = 1000 ##ml
 
 cash_drawer = {
     "0,10€":{
@@ -55,18 +51,12 @@ menue = {
     }
 }
 
-
 def write_status_to_csv(filename='status.csv'):
     with open(filename, mode='w', newline='') as csv_file:
-        fieldnames = ['coffeedrink', 'price', 'water', 'coffee', 'milk']
-        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(['water_tank', 'coffee_grinder', 'milk_tank'])
+        writer.writerow([water_tank, coffee_grinder, milk_tank])
 
-        writer.writeheader()
-        
-        for coffeedrink, details in menue.items():
-                    row = {'coffeedrink': coffeedrink}
-                    row.update(details)
-                    writer.writerow(row)
 
 def write_cash_status_to_csv(filename='cash_status.csv'):
     with open(filename, mode='w', newline='') as csv_file:
@@ -82,28 +72,20 @@ def write_cash_status_to_csv(filename='cash_status.csv'):
 
 
 def read_status_from_csv(filename='status.csv'):
-    global menue
-    load_menue = {}
+    global water_tank
+    global coffee_grinder
+    global milk_tank
 
     try:
         with open(filename, mode='r', newline='') as csv_file:
             reader = csv.DictReader(csv_file)
-            print("Datei geöffnet")
-            
             for row in reader:
-                try:
-                    coffeedrink = row['coffeedrink']
-                    menue[coffeedrink] = {
-                        'price': float(row['price']),
-                        'water': int(row['water']),
-                        'coffee': int(row['coffee']),
-                        'milk': int(row['milk'])
-                    }
-                except (KeyError, ValueError) as e:
-                     print("Error")
-
+                water_tank = int(row['water_tank'])
+                coffee_grinder = int(row['coffee_grinder'])
+                milk_tank = int(row['milk_tank'])
     except FileNotFoundError:
-        print("Keine Datei gefunden. Standardwerte werden gelesen")
+        print("Keine Status-Datei gefunden. Ressourcen bleiben beim Standard.")
+
 
 def read_cash_status_from_csv(filename='cash_status.csv'):
     global cash_drawer
