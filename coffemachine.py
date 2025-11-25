@@ -105,7 +105,7 @@ def read_status_from_csv(filename='status.csv'):
     except FileNotFoundError:
         print("Keine Datei gefunden. Standardwerte werden gelesen")
 
-def read_cash_status_from_csv(filename='status.csv'):
+def read_cash_status_from_csv(filename='cash_status.csv'):
     global cash_drawer
     load_cash_drawer = {}
 
@@ -115,10 +115,10 @@ def read_cash_status_from_csv(filename='status.csv'):
             
             for row in reader:
                 try:
-                    kleuingeld = row['kleingeld']
+                    kleingeld = row['kleingeld']
                     cash_drawer[kleingeld] = {
-                        'wert': float(row['price']),
-                        'muenzen': int(row['water']),
+                        'wert': float(row['wert']),
+                        'muenzen': int(row['muenzen']),
                     }
                 except (KeyError, ValueError) as e:
                      print("Error")
