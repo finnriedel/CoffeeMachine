@@ -56,7 +56,7 @@ menue = {
 }
 
 
-def write_menue_to_csv(filename='menue.csv'):
+def write_status_to_csv(filename='status.csv'):
     with open(filename, mode='w', newline='') as csv_file:
         fieldnames = ['coffeedrink', 'price', 'water', 'coffee', 'milk']
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
@@ -68,23 +68,86 @@ def write_menue_to_csv(filename='menue.csv'):
                     row.update(details)
                     writer.writerow(row)
 
+def write_cash_status_to_csv(filename='cash_status.csv'):
+    with open(filename, mode='w', newline='') as csv_file:
+        fieldnames = ['kleingeld', 'wert', 'muenzen']
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
-def read_menue_from_csv(filename='menue.csv'):
-    menue = {}
-    with open(filename, mode='r', newline='') as csv_file:
-        reader = csv.DictReader(csv_file)
+        writer.writeheader()
         
-        for row in reader:
-            # Konvertiere die Werte in die richtigen Typen
-            coffeedrink = row['coffeedrink']
-            menue[coffeedrink] = {
-                'price': float(row['price']),
-                'water': int(row['water']),
-                'coffee': int(row['coffee']),
-                'milk': int(row['milk'])
-            }
-    return menue
+        for kleingeld, details in cash_drawer.items():
+                    row = {'kleingeld': kleingeld}
+                    row.update(details)
+                    writer.writerow(row)
 
+
+def read_status_from_csv(filename='status.csv'):
+    global menue
+    load_menue = {}
+
+    try:
+        with open(filename, mode='r', newline='') as csv_file:
+            reader = csv.DictReader(csv_file)
+            print("Datei geöffnet")
+            
+            for row in reader:
+                try:
+                    coffeedrink = row['coffeedrink']
+                    menue[coffeedrink] = {
+                        'price': float(row['price']),
+                        'water': int(row['water']),
+                        'coffee': int(row['coffee']),
+                        'milk': int(row['milk'])
+                    }
+                except (KeyError, ValueError) as e:
+                     print("Error")
+
+    except FileNotFoundError:
+        print("Keine Datei gefunden. Standardwerte werden gelesen")
+
+def read_cash_status_from_csv(filename='status.csv'):
+    global cash_drawer
+    load_cash_drawer = {}
+
+    try:
+        with open(filename, mode='r', newline='') as csv_file:
+            reader = csv.DictReader(csv_file)
+            
+            for row in reader:
+                try:
+                    kleuingeld = row['kleingeld']
+                    cash_drawer[kleingeld] = {
+                        'wert': float(row['price']),
+                        'muenzen': int(row['water']),
+                    }
+                except (KeyError, ValueError) as e:
+                     print("Error")
+
+    except FileNotFoundError:
+        print("Keine Datei gefunden. Kassenbestand auf Standard gesetzt.")
+
+def read_price_config_csv(filename='price_config.csv'):
+    global menue
+    
+    try:
+        with open(filename, mode='r', newline='') as csv_file:
+            reader = csv.DictReader(csv_file)
+            
+            for row in reader:
+                try:
+                    drink_name = row['coffeedrink']
+                    new_price = float(row['price'])
+                    
+                    if drink_name in menue:
+                        menue[drink_name]['price'] = new_price
+                    else:
+                        print(f"-> Warnung: {drink_name} nicht im Menü gefunden. Ignoriert.")
+                        
+                except ValueError:
+                    print(f"-> Fehler: Ungültiger Preis in Zeile: {row}")
+
+    except FileNotFoundError:
+        print("Keine Preis-Config Datei gefunden. Alte Preise bleiben bestehen.")     
 
 def cash_drawer_summieren():
     summe = 0
@@ -153,7 +216,11 @@ def replenish():
     print("In Log-Datei geschrieben...")
     dat_Obj.close()
 
-read_menue_from_csv()
+
+read_status_from_csv()
+read_cash_status_from_csv()
+read_price_config_csv()
+
 while True:
 
     for i in menue:
@@ -163,7 +230,7 @@ while True:
 
     if auswahl in menue:
 
-        if water_tank-menue[auswahl]['water'] >= 0 and coffee_grinder-menue[auswahl]['coffee'] >= 0 and milk_tank-menue[auswahl]['milk']:
+        if water_tank-menue[auswahl]['water'] >= 0 and coffee_grinder-menue[auswahl]['coffee'] >= 0 and milk_tank-menue[auswahl]['milk'] >= 0:
             print("Die Kaffemaschine hat genügend ressourcen.")
         else:
             print("Die Kaffemaschine muss erst aufgefüllt werden")
@@ -174,8 +241,9 @@ while True:
         print("Der ausgewählte Kaffe kostet:", preis, "€")
         
     elif auswahl == "off":
-        write_menue_to_csv()
         print("Kaffemaschine wird ausgeschaltet...")
+        write_status_to_csv()
+        write_cash_status_to_csv()
         break
     elif auswahl == "balance":
         cash_drawer_balance()
