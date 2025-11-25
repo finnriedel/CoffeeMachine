@@ -1,5 +1,6 @@
 import os
 import datetime
+import csv
 #Price in Euro
 #Water in ml
 #Milk in ml
@@ -31,6 +32,59 @@ cash_drawer = {
         "muenzen": 5
     }
 }
+
+
+menue = {
+    "Latte Machiato":{
+        "price":5,
+        "water":100,
+        "coffee":25,
+        "milk":250
+    }, 
+    "Espresso":{
+        "price":3,
+        "water":50,
+        "coffee":20,
+        "milk":0
+        }, 
+    "Cappuccino":{
+        "price":4.5,
+        "water":250,
+        "coffee":25,
+        "milk":100
+    }
+}
+
+
+def write_menue_to_csv(filename='menue.csv'):
+    with open(filename, mode='w', newline='') as csv_file:
+        fieldnames = ['coffeedrink', 'price', 'water', 'coffee', 'milk']
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+
+        writer.writeheader()
+        
+        for coffeedrink, details in menue.items():
+                    row = {'coffeedrink': coffeedrink}
+                    row.update(details)
+                    writer.writerow(row)
+
+
+def read_menue_from_csv(filename='menue.csv'):
+    menue = {}
+    with open(filename, mode='r', newline='') as csv_file:
+        reader = csv.DictReader(csv_file)
+        
+        for row in reader:
+            # Konvertiere die Werte in die richtigen Typen
+            coffeedrink = row['coffeedrink']
+            menue[coffeedrink] = {
+                'price': float(row['price']),
+                'water': int(row['water']),
+                'coffee': int(row['coffee']),
+                'milk': int(row['milk'])
+            }
+    return menue
+
 
 def cash_drawer_summieren():
     summe = 0
@@ -99,27 +153,8 @@ def replenish():
     print("In Log-Datei geschrieben...")
     dat_Obj.close()
 
+read_menue_from_csv()
 while True:
-
-    menue = {
-        "Latte Machiato":{
-            "price":5,
-            "water":100,
-            "coffee":25,
-            "milk":250
-        }, 
-        "Espresso":{
-            "price":3,
-            "water":50,
-            "coffee":20,
-            "milk":0
-            }, 
-        "Cappuccino":{
-            "price":4.5,
-            "water":250,
-            "coffee":25,
-            "milk":100
-            }}
 
     for i in menue:
         print(i)
@@ -139,6 +174,7 @@ while True:
         print("Der ausgewählte Kaffe kostet:", preis, "€")
         
     elif auswahl == "off":
+        write_menue_to_csv()
         print("Kaffemaschine wird ausgeschaltet...")
         break
     elif auswahl == "balance":
