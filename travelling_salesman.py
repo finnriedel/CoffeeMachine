@@ -1,4 +1,40 @@
 
+# Rekursive Funktion zur Erzeugung aller Permutationen
+def generate_permutations(elements):
+    if len(elements) == 0:
+        return [[]]
+    perms = []
+    for i in range(len(elements)):
+        rest = elements[:i] + elements[i+1:]
+        for p in generate_permutations(rest):
+            perms.append([elements[i]] + p)
+    return perms
+
+def shortest_tour(distance_matrix):
+    n = len(distance_matrix)
+    nodes = list(range(n))
+    start = 0  # Startpunkt fixieren
+    
+    # Alle Permutationen der übrigen Punkte erzeugen
+    permutations = generate_permutations(nodes[1:])
+    
+    best_distance = float('inf')
+    best_path = None
+    
+    for perm in permutations:
+        path = [start] + perm + [start]
+        # Berechne die Gesamtdistanz
+        distance = 0
+        for i in range(len(path) - 1):
+            distance += distance_matrix[path[i]][path[i+1]]
+        
+        if distance < best_distance:
+            best_distance = distance
+            best_path = path
+    
+    return best_path, best_distance
+
+# Deine Matrix
 staedte = [
     [0, 101, 111, 114, 113, 140, 154],
     [101, 0, 125, 33, 64, 24, 76],
@@ -9,16 +45,6 @@ staedte = [
     [154, 76, 143, 106, 135, 83, 0]
 ]
 
-
-
-kuerzester_weg = 1000000
-
-for i in range(1):
-    tmp = 0
-    for j in range(7):
-       tmp = tmp + staedte[i][j]
-    
-    if(tmp < kuerzester_weg):
-        kuerzester_weg = tmp
-
-print(kuerzester_weg)
+path, dist = shortest_tour(staedte)
+print("Kürzester Pfad:", path)
+print("Minimale Distanz:", dist, "km")
