@@ -1,0 +1,8 @@
+Wasserstand: 1900 ml
+Kaffebohnen: 475 g
+Milchstand: 275 ml
+--- Kassenbestand ---0,10€: 5 Münzen
+0,20€: 5 Münzen
+0,50€: 5 Münzen
+1,00€: 4 Münzen
+2,00€: 11 Münzen
