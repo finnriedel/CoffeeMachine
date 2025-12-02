@@ -20,6 +20,8 @@ def shortest_tour(distance_matrix):
     
     best_distance = float('inf')
     best_path = None
+    worst_distance = float('-inf')
+    worst_path = None
     
     for perm in permutations:
         path = [start] + perm + [start]
@@ -28,11 +30,15 @@ def shortest_tour(distance_matrix):
         for i in range(len(path) - 1):
             distance += distance_matrix[path[i]][path[i+1]]
         
-        if distance < best_distance:
+        if distance <= best_distance:
             best_distance = distance
             best_path = path
+
+        if distance >= worst_distance:
+            worst_distance = distance
+            worst_path = path
     
-    return best_path, best_distance
+    return best_path, best_distance, worst_path, worst_distance
 
 # Deine Matrix
 staedte = [
@@ -45,6 +51,9 @@ staedte = [
     [154, 76, 143, 106, 135, 83, 0]
 ]
 
-path, dist = shortest_tour(staedte)
-print("Kürzester Pfad:", path)
-print("Minimale Distanz:", dist, "km")
+#print(generate_permutations(staedte))
+bpath, bdist, wpath, wdist = shortest_tour(staedte)
+print("Kürzester Pfad:", bpath)
+print("Minimale Distanz:", bdist, "km")
+print("Längster Pfad:", wpath)
+print("Maximale Distanz:", wdist, "km")
