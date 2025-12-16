@@ -45,11 +45,11 @@ def dijkstra(nodes, source_node):
 
         unvisited_nodes.remove(current)
 
-        for neighbor, weight in nodes[current].items():
-            new_dist = dist[current] + weight
+        for next_node, distanz in nodes[current].items():
+            new_dist = dist[current] + distanz
 
-            if new_dist < dist[neighbor]:
-                dist[neighbor] = new_dist
+            if new_dist < dist[next_node]:
+                dist[next_node] = new_dist
 
     return dist
 
