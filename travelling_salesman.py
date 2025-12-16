@@ -1,4 +1,3 @@
-
 # Rekursive Funktion zur Erzeugung aller Permutationen
 def generate_permutations(elements):
     if len(elements) == 0:
@@ -9,6 +8,7 @@ def generate_permutations(elements):
         for p in generate_permutations(rest):
             perms.append([elements[i]] + p)
     return perms
+
 
 def shortest_tour(distance_matrix):
     n = len(distance_matrix)
@@ -40,6 +40,7 @@ def shortest_tour(distance_matrix):
     
     return best_path, best_distance, worst_path, worst_distance
 
+
 # Deine Matrix
 staedte = [
     [0, 101, 111, 114, 113, 140, 154],
@@ -50,6 +51,7 @@ staedte = [
     [140, 24, 139, 68, 85, 0, 83],
     [154, 76, 143, 106, 135, 83, 0]
 ]
+
 
 #print(generate_permutations(staedte))
 bpath, bdist, wpath, wdist = shortest_tour(staedte)
